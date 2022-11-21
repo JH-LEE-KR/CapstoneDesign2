@@ -31,6 +31,9 @@ def parse_args():
     elif config == 'five_datasets_l2p':
         from configs.five_datasets_l2p import get_args_parser
         config_parser = subparser.add_parser('five_datasets_l2p', help='5-Datasets L2P configs')
+    elif config == 'cifar100_l2p_diverse':
+        from configs.cifar100_l2p_diverse import get_args_parser
+        config_parser = subparser.add_parser('cifar100_l2p_diverse', help='Split-CIFAR100 L2P Diverse configs')
     else:
         raise NotImplementedError
 
