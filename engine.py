@@ -68,7 +68,7 @@ def train_one_epoch(model: torch.nn.Module, original_model: torch.nn.Module,
             loss = loss - args.pull_constraint_coeff * output['reduce_sim']
             
         if args.diverse_coeff:
-            loss = loss + args.diverse_coeff * utils.Loss_cosine_attn(output['attn'])
+            loss = loss + args.diverse_coeff * utils.loss_s_orth_attn(output['attn'])
 
         acc1, acc5 = accuracy(logits, target, topk=(1, 5))
 

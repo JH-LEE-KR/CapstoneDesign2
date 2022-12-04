@@ -243,7 +243,7 @@ def init_distributed_mode(args):
     torch.distributed.barrier()
     setup_for_distributed(args.rank == 0)
 
-def Loss_cosine_attn(h_emb, eps=1e-8):
+def loss_cosine_attn(h_emb, eps=1e-8):
     # h_emb (B, Tokens, dims * heads)
     # normalize
     target_h_emb = h_emb
@@ -256,3 +256,15 @@ def Loss_cosine_attn(h_emb, eps=1e-8):
     sim_matrix = torch.einsum('abc,acd->abd', a_norm, a_norm.transpose(1,2))
     loss_cos = sim_matrix.mean() # also add diagnoal elements
     return loss_cos
+
+def loss_s_orth_attn(A):
+    # attn (Batch-size, Heads, Tokens, Tokens)
+    adevice = A.device
+    B, H = A.shape[0], A.shape[1]
+    A = A.view(B, H, -1)
+
+    ATA = A @ A.permute(0,2,1)
+    I = torch.eye(H, device=adevice).repeat(B,1,1)
+    norm_pow2 = (ATA-I)**2
+    loss = norm_pow2.sum(dim=2).sum(dim=1).mean()
+    return loss 
