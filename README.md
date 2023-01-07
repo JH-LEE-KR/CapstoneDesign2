@@ -12,7 +12,7 @@ The system I used and tested in
 ## Usage
 First, clone the repository locally:
 ```
-git clone https://github.com/Lee-JH-KR/CapstoneDesign2
+git clone https://github.com/JH-LEE-KR/CapstoneDesign2
 cd CapstoneDesign2
 ```
 Then, install the packages below:
